@@ -1,33 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Dropbox Hero Grid Animation - White Tile First</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body {
-    width: 100%; height: 100%; overflow-x: hidden;
-    background: #000; color: white; height: 300vh;
-    font-family: system-ui, sans-serif;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fibonacci Grid Snap Animation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
+
+
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    color: white;
+    height: 300vh;
+    font-family: "Teko", sans-serif;
   }
 
   body {
-    display: flex; justify-content: center; align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    --gap: 40px;
     background-image:
-      linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
-    background-size: 60px 60px;
+      linear-gradient(rgba(0, 122, 255, 0.2) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 122, 255, 0.2) 1px, transparent 1px);
+    background-size: calc(var(--gap) + 60px) calc(var(--gap) + 60px);
+    background-position: center;
+    background-color: #000;
   }
 
   .fibonacci {
     position: fixed;
-    top: 50%; left: 50%;
-    width: 1144px; height: 704px;
+    top: 50%;
+    left: 50%;
+    width: 1144px;
+    height: 704px;
     transform: translate(-50%, -50%);
     transform-origin: center center;
     user-select: none;
-
     --gap: 40px;
   }
 
@@ -40,104 +61,337 @@
   }
 
   .tile-content {
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     border-radius: 16px;
-    display: flex; justify-content: center; align-items: center;
-    font-size: 1.2rem; font-weight: 600;
-    color: white;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    padding: 10% 7%;
+    transition: background-color 0.3s ease;
   }
 
-  /* Tiles */
-  .tile1 { width: 704px; height: 704px; top: 0; left: 0; background: #072d2b; }
-  .tile2 { width: 440px; height: 440px; top: 0; left: 704px; background: #f16529; }
-  .tile3 { width: 264px; height: 264px; top: 440px; left: 880px; background: #c94422; }
-  .tile4 { width: 176px; height: 176px; top: 528px; left: 704px; background: #edf6d9; color: #222; }
-  .tile5 { width: 88px; height: 88px; top: 440px; left: 704px; background: #ffffff; color: #222; }
-  .tile6 { width: 88px; height: 88px; top: 440px; left: 792px; background: #072d2b; }
+  /* Specific positioning for each tile */
+  .tile1 .tile-content {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .tile2 .tile-content {
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+
+  .tile3 .tile-content {
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .tile4 .tile-content {
+    justify-content: flex-end;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .tile5 .tile-content,
+  .tile6 .tile-content {
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+
+  .tile-text {
+    font-weight: 600;
+    line-height: 1.2;
+    position: relative;
+    display: inline-block;
+    transition: color 0.5s ease, text-shadow 0.5s ease;
+  }
+
+  .tile-content .roman {
+    order: 1;
+    margin-bottom: 4px;
+    line-height: 0.5;
+  }
+
+  .tile-content .devanagari {
+    order: 2;
+    line-height: 0.8;
+  }
+
+  .tile3 .roman,
+  .tile4 .roman,
+  .tile6 .roman {
+    order: 2;
+    margin-top: 4px;
+  }
+
+  .tile3 .devanagari,
+  .tile4 .devanagari,
+  .tile6 .devanagari {
+    order: 1;
+  }
+
+  /* Matched Font Sizes */
+  .tile1 .devanagari,
+  .tile1 .roman {
+    font-size: 7rem;
+  }
+
+  .tile2 .devanagari,
+  .tile2 .roman {
+    font-size: 5.5rem;
+  }
+
+  .tile3 .devanagari,
+  .tile3 .roman {
+    font-size: 4.5rem;
+  }
+
+  .tile4 .devanagari,
+  .tile4 .roman {
+    font-size: 3rem;
+  }
+
+  .tile6 .devanagari,
+  .tile6 .roman {
+    font-size: 2rem;
+  }
+
+  /* Tile-specific colors for Roman text */
+  .tile1 .roman {
+    color: #f16529;
+  }
+
+  .tile2 .roman {
+    color: #042B29;
+  }
+
+  .tile3 .roman {
+    color: #042B29;
+  }
+
+  .tile4 .roman {
+    color: #c94422;
+  }
+
+  .tile5 .roman {
+    color: #ffffff;
+  }
+
+  .tile6 .roman {
+    color: #c94422;
+  }
+
+  /* Base Devanagari text stroked with matching tile background */
+  .tile1 .devanagari {
+    color: #072d2b;
+    text-shadow:
+      -1px -1px 0 #EDF7D2,
+      1px -1px 0 #EDF7D2,
+      -1px 1px 0 #EDF7D2,
+      1px 1px 0 #EDF7D2;
+  }
+
+  .tile2 .devanagari {
+    color: #f16529;
+    text-shadow:
+      -1px -1px 0 #EDF7D2,
+      1px -1px 0 #EDF7D2,
+      -1px 1px 0 #EDF7D2,
+      1px 1px 0 #EDF7D2;
+  }
+
+  .tile3 .devanagari {
+    color: #c94422;
+    text-shadow:
+      -1px -1px 0 #EDF7D2,
+      1px -1px 0 #EDF7D2,
+      -1px 1px 0 #EDF7D2,
+      1px 1px 0 #EDF7D2;
+  }
+
+  .tile4 .devanagari {
+    color: #edf6d9;
+    text-shadow:
+      -1px -1px 0 #042B29,
+      1px -1px 0 #042B29,
+      -1px 1px 0 #042B29,
+      1px 1px 0 #042B29;
+  }
+
+  .tile5 .devanagari {
+    color: #f16529;
+  }
+
+  .tile6 .devanagari {
+    color: #ffffff;
+    text-shadow:
+      -1px -1px 0 #042B29,
+      1px -1px 0 #042B29,
+      -1px 1px 0 #042B29,
+      1px 1px 0 #042B29;
+  }
+
+  /* Hover logic for the entire tile */
+  .tile-content:hover .devanagari {
+    text-shadow: none; /* Remove stroke */
+  }
+
+  .tile1 .tile-content:hover .devanagari {
+    color: #EDF7D2; /* Fill with Roman text color */
+  }
+
+  .tile2 .tile-content:hover .devanagari {
+    color: #EDF7D2; /* Fill with Roman text color */
+  }
+
+  .tile3 .tile-content:hover .devanagari {
+    color: #EDF7D2; /* Fill with Roman text color */
+  }
+
+  .tile4 .tile-content:hover .devanagari {
+    color: #042B29; /* Fill with Roman text color */
+  }
+
+  .tile5 .tile-content:hover .devanagari {
+    color: #edf6d9; /* Fill with a light color */
+  }
+
+  .tile6 .tile-content:hover .devanagari {
+    color: #042B29; /* Fill with Roman text color */
+  }
+
+  /* Fibonacci tile sizes and positions */
+  .tile1 {
+    width: 704px;
+    height: 704px;
+    top: 0;
+    left: 0;
+    background: #072d2b;
+  }
+
+  .tile2 {
+    width: 440px;
+    height: 440px;
+    top: 0;
+    left: 704px;
+    background: #f16529;
+  }
+
+  .tile3 {
+    width: 264px;
+    height: 264px;
+    top: 440px;
+    left: 880px;
+    background: #c94422;
+  }
+
+  .tile4 {
+    width: 176px;
+    height: 176px;
+    top: 528px;
+    left: 704px;
+    background: #edf6d9;
+    color: #222;
+  }
+
+  .tile5 {
+    width: 88px;
+    height: 88px;
+    top: 440px;
+    left: 704px;
+    background: #072d2b;
+    color: #222;
+  }
+
+  .tile6 {
+    width: 88px;
+    height: 88px;
+    top: 440px;
+    left: 792px;
+    background: #ffffff;
+  }
 </style>
 </head>
+
 <body>
 
-<div class="fibonacci" id="fibonacci">
-  <div class="tile-container tile1"><div class="tile-content">Box 1</div></div>
-  <div class="tile-container tile2"><div class="tile-content">Box 2</div></div>
-  <div class="tile-container tile3"><div class="tile-content">Box 3</div></div>
-  <div class="tile-container tile4"><div class="tile-content">Box 4</div></div>
-  <div class="tile-container tile5"><div class="tile-content">Box 5</div></div>
-  <div class="tile-container tile6"><div class="tile-content">Box 6</div></div>
-</div>
+  <div class="fibonacci" id="fibonacci">
+    <div class="tile-container tile1">
+      <div class="tile-content">
+        <div class="tile-text roman" data-text="SERVICES">SERVICES</div>
+        <div class="tile-text devanagari" data-text="सर्विसेस">सर्विसेस</div>
+      </div>
+    </div>
+    <div class="tile-container tile2">
+      <div class="tile-content">
+        <div class="tile-text roman" data-text="WORK">WORK</div>
+        <div class="tile-text devanagari" data-text="कामकाज">काम काज</div>
+      </div>
+    </div>
+    <div class="tile-container tile3">
+      <div class="tile-content">
+        <div class="tile-text devanagari" data-text="संपर्क">संपर्क</div>
+        <div class="tile-text roman" data-text="CONTACT">CONTACT</div>
+      </div>
+    </div>
+    <div class="tile-container tile4">
+      <div class="tile-content">
+        <div class="tile-text devanagari" data-text="जान-पहचान">जान-पहचान</div>
+        <div class="tile-text roman" data-text="ABOUT">ABOUT</div>
+      </div>
+    </div>
+    <div class="tile-container tile5">
+      <div class="tile-content">
+        <div class="tile-text roman" data-text="UI">UI</div>
+        <div class="tile-text devanagari" data-text="UX">UX</div>
+      </div>
+    </div>
+    <div class="tile-container tile6">
+      <div class="tile-content">
+        <div class="tile-text roman" data-text="BLOGS">BLOGS</div>
+        <div class="tile-text devanagari" data-text="लेख">लेख</div>
+      </div>
+    </div>
+  </div>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script>
-gsap.registerPlugin(ScrollTrigger);
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
 
-const fibonacci = document.getElementById('fibonacci');
-const tiles = fibonacci.querySelectorAll('.tile-container');
-const whiteTile = fibonacci.querySelector('.tile5');
-const otherTiles = [...tiles].filter(t => !t.classList.contains('tile5'));
+    const fibonacci = document.getElementById('fibonacci');
+    const tiles = fibonacci.querySelectorAll('.tile-container');
+    const whiteTile = fibonacci.querySelector('.tile5');
+    const otherTiles = [...tiles].filter(t => !t.classList.contains('tile5'));
 
-const containerRect = fibonacci.getBoundingClientRect();
-const centerX = containerRect.width / 2;
-const centerY = containerRect.height / 2;
+    const containerRect = fibonacci.getBoundingClientRect();
+    const centerX = containerRect.width / 2;
+    const centerY = containerRect.height / 2;
 
-// White tile initial oversized in center
-gsap.set(whiteTile, {
-  scale: 10,
-  xPercent: -50,
-  yPercent: -50,
-  top: "50%",
-  left: "50%"
-});
+    gsap.set(whiteTile, { scale: 10, xPercent: -50, yPercent: -50, top: "50%", left: "50%" });
 
-// Other tiles: radial start outside viewport
-otherTiles.forEach(tile => {
-  const rect = tile.getBoundingClientRect();
-  const tileCenterX = rect.left + rect.width / 2 - containerRect.left;
-  const tileCenterY = rect.top + rect.height / 2 - containerRect.top;
-  const dx = tileCenterX - centerX;
-  const dy = tileCenterY - centerY;
+    otherTiles.forEach(tile => {
+      const rect = tile.getBoundingClientRect();
+      const tileCenterX = rect.left + rect.width / 2 - containerRect.left;
+      const tileCenterY = rect.top + rect.height / 2 - containerRect.top;
+      const dx = tileCenterX - centerX;
+      const dy = tileCenterY - centerY;
+      gsap.set(tile, { x: dx * 4, y: dy * 4 });
+    });
 
-  gsap.set(tile, {
-    x: dx * 4,
-    y: dy * 4
-  });
-});
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: 1 }
+    });
 
-// Timeline synced with scroll
-const tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: document.body,
-    start: "top top",
-    end: "bottom bottom",
-    scrub: 1
-  }
-});
-
-// Step 1: Shrink white tile into grid (first 40% scroll)
-tl.to(whiteTile, {
-  scale: 1,
-  top: "440px",
-  left: "704px",
-  xPercent: 0,
-  yPercent: 0,
-  ease: "power2.inOut"
-}, 0);
-
-// Step 2: Other tiles fly in after white tile begins shrinking
-tl.to(otherTiles, {
-  x: 0,
-  y: 0,
-  ease: "power3.out",
-  stagger: 0.05
-}, 0.2);
-
-// Step 3: Shrink gaps to zero gradually
-tl.to(fibonacci, {
-  "--gap": "0px",
-  ease: "power2.inOut"
-}, 0);
-</script>
+    tl.to(whiteTile, { scale: 1, top: "440px", left: "704px", xPercent: 0, yPercent: 0, ease: "power2.inOut" }, 0);
+    tl.to(otherTiles, { x: 0, y: 0, ease: "power3.out", stagger: 0.05 }, 0.2);
+    tl.to([".fibonacci", "body"], { "--gap": "0px", ease: "power2.inOut" }, 0);
+  </script>
 
 </body>
+
 </html>
