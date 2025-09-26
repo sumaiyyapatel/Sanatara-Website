@@ -9,348 +9,465 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
 
-
   <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  html,
-  body {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    color: white;
-    height: 300vh;
-    font-family: "Teko", sans-serif;
-  }
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      color: white;
+      height: 300vh;
+      font-family: "Teko", sans-serif;
+      background: #fff;
+    }
 
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    --gap: 40px;
-    background-image:
-      linear-gradient(rgba(0, 122, 255, 0.2) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 122, 255, 0.2) 1px, transparent 1px);
-    background-size: calc(var(--gap) + 60px) calc(var(--gap) + 60px);
-    background-position: center;
-    background-color: #000;
-  }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      --gap: 40px;
+      background: none; /* Background removed */
+      overflow: hidden;
+      position: relative;
+    }
 
-  .fibonacci {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 1144px;
-    height: 704px;
-    transform: translate(-50%, -50%);
-    transform-origin: center center;
-    user-select: none;
-    --gap: 40px;
-  }
+    /* BOTTOM LAYER - Grid lines only, no text */
+    .fibonacci-grid {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 1144px;
+      height: 704px;
+      transform: translate(-50%, -50%);
+      transform-origin: center center;
+      user-select: none;
+      --gap: 40px;
+      z-index: 1;
+    }
 
-  .tile-container {
-    position: absolute;
-    box-sizing: border-box;
-    padding: var(--gap);
-    background-clip: content-box;
-    background: #000;
-  }
+    /* TOP LAYER - Text content only, no lines */
+    .fibonacci-content {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 1144px;
+      height: 704px;
+      transform: translate(-50%, -50%);
+      transform-origin: center center;
+      user-select: none;
+      --gap: 40px;
+      z-index: 2;
+      color: white;
+    }
 
-  .tile-content {
-    width: 100%;
-    height: 100%;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    padding: 10% 7%;
-    transition: background-color 0.3s ease;
-  }
+    .tile-container,
+    .grid-tile {
+      position: absolute;
+      box-sizing: border-box;
+      padding: var(--gap);
+      background-clip: content-box;
+      background: #000;
+      user-select: none;
+    }
 
-  /* Specific positioning for each tile */
-  .tile1 .tile-content {
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
+    /* Create line wrapper for grid tiles */
+    .tile-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  .tile2 .tile-content {
-    justify-content: flex-start;
-    align-items: flex-end;
-  }
+    /* Vertical lines - orange */
+    .tile-lines::before,
+    .tile-lines::after {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 400vh;
+      background: rgba(241, 101, 41, 0.15);
+      top: -150vh;
+      z-index: 0;
+      transition: all 0.6s ease;
+    }
 
-  .tile3 .tile-content {
-    justify-content: flex-end;
-    align-items: flex-end;
-  }
+    .tile-lines::before {
+      left: 0;
+    }
 
-  .tile4 .tile-content {
-    justify-content: flex-end;
-    align-items: flex-start;
-    text-align: left;
-  }
+    .tile-lines::after {
+      right: 0;
+    }
 
-  .tile5 .tile-content,
-  .tile6 .tile-content {
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-  }
+    /* Horizontal lines - orange */
+    .grid-tile::before,
+    .grid-tile::after {
+      content: '';
+      position: absolute;
+      height: 1px;
+      width: 400vw;
+      background: rgba(241, 101, 41, 0.15);
+      left: -150vw;
+      pointer-events: none;
+      z-index: 0;
+      transition: all 0.6s ease;
+    }
 
-  .tile-text {
-    font-weight: 600;
-    line-height: 1.2;
-    position: relative;
-    display: inline-block;
-    transition: color 0.5s ease, text-shadow 0.5s ease;
-  }
+    .grid-tile::before {
+      top: 0;
+    }
 
-  .tile-content .roman {
-    order: 1;
-    margin-bottom: 4px;
-    line-height: 0.5;
-  }
+    .grid-tile::after {
+      bottom: 0;
+    }
 
-  .tile-content .devanagari {
-    order: 2;
-    line-height: 0.8;
-  }
+    /* Enhanced styling for UI/UX tile borders - more prominent but still subtle orange */
+    .grid-tile5 .tile-lines::before,
+    .grid-tile5 .tile-lines::after,
+    .grid-tile5::before,
+    .grid-tile5::after {
+      background: rgba(241, 101, 41, 0.3);
+      z-index: 0;
+    }
 
-  .tile3 .roman,
-  .tile4 .roman,
-  .tile6 .roman {
-    order: 2;
-    margin-top: 4px;
-  }
+    /* Grid lines fade in/out effect during animation */
+    .fibonacci-grid[data-animating="true"] .tile-lines::before,
+    .fibonacci-grid[data-animating="true"] .tile-lines::after,
+    .fibonacci-grid[data-animating="true"] .grid-tile::before,
+    .fibonacci-grid[data-animating="true"] .grid-tile::after {
+      background: rgba(241, 101, 41, 0.22);
+    }
 
-  .tile3 .devanagari,
-  .tile4 .devanagari,
-  .tile6 .devanagari {
-    order: 1;
-  }
+    .tile-content {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      padding: 10% 7%;
+      transition: background-color 0.3s ease;
+      z-index: 2;
+    }
 
-  /* Matched Font Sizes */
-  .tile1 .devanagari,
-  .tile1 .roman {
-    font-size: 7rem;
-  }
+    /* Specific positioning for each tile content */
+    .tile1 .tile-content {
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
 
-  .tile2 .devanagari,
-  .tile2 .roman {
-    font-size: 5.5rem;
-  }
+    .tile2 .tile-content {
+      justify-content: flex-start;
+      align-items: flex-end;
+    }
 
-  .tile3 .devanagari,
-  .tile3 .roman {
-    font-size: 4.5rem;
-  }
+    .tile3 .tile-content {
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
 
-  .tile4 .devanagari,
-  .tile4 .roman {
-    font-size: 3rem;
-  }
+    .tile4 .tile-content {
+      justify-content: flex-end;
+      align-items: flex-start;
+      text-align: left;
+    }
 
-  .tile6 .devanagari,
-  .tile6 .roman {
-    font-size: 2rem;
-  }
+    .tile5 .tile-content,
+    .tile6 .tile-content {
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+    }
 
-  /* Tile-specific colors for Roman text */
-  .tile1 .roman {
-    color: #f16529;
-  }
+    .tile-text {
+      font-weight: 600;
+      line-height: 1.2;
+      position: relative;
+      display: inline-block;
+      transition: color 0.5s ease, text-shadow 0.5s ease;
+      user-select: none;
+    }
 
-  .tile2 .roman {
-    color: #042B29;
-  }
+    .tile-content .roman {
+      order: 1;
+      margin-bottom: 4px;
+      line-height: 0.5;
+    }
 
-  .tile3 .roman {
-    color: #042B29;
-  }
+    .tile-content .devanagari {
+      order: 2;
+      line-height: 0.8;
+    }
 
-  .tile4 .roman {
-    color: #c94422;
-  }
+    .tile3 .roman,
+    .tile4 .roman,
+    .tile6 .roman {
+      order: 2;
+      margin-top: 4px;
+    }
 
-  .tile5 .roman {
-    color: #ffffff;
-  }
+    .tile3 .devanagari,
+    .tile4 .devanagari,
+    .tile6 .devanagari {
+      order: 1;
+    }
 
-  .tile6 .roman {
-    color: #c94422;
-  }
+    /* Matched Font Sizes */
+    .tile1 .devanagari,
+    .tile1 .roman {
+      font-size: 7rem;
+    }
 
-  /* Base Devanagari text stroked with matching tile background */
-  .tile1 .devanagari {
-    color: #072d2b;
-    text-shadow:
-      -1px -1px 0 #EDF7D2,
-      1px -1px 0 #EDF7D2,
-      -1px 1px 0 #EDF7D2,
-      1px 1px 0 #EDF7D2;
-  }
+    .tile2 .devanagari,
+    .tile2 .roman {
+      font-size: 5.5rem;
+    }
 
-  .tile2 .devanagari {
-    color: #f16529;
-    text-shadow:
-      -1px -1px 0 #EDF7D2,
-      1px -1px 0 #EDF7D2,
-      -1px 1px 0 #EDF7D2,
-      1px 1px 0 #EDF7D2;
-  }
+    .tile3 .devanagari,
+    .tile3 .roman {
+      font-size: 4.5rem;
+    }
 
-  .tile3 .devanagari {
-    color: #c94422;
-    text-shadow:
-      -1px -1px 0 #EDF7D2,
-      1px -1px 0 #EDF7D2,
-      -1px 1px 0 #EDF7D2,
-      1px 1px 0 #EDF7D2;
-  }
+    .tile4 .devanagari,
+    .tile4 .roman {
+      font-size: 3rem;
+    }
 
-  .tile4 .devanagari {
-    color: #edf6d9;
-    text-shadow:
-      -1px -1px 0 #042B29,
-      1px -1px 0 #042B29,
-      -1px 1px 0 #042B29,
-      1px 1px 0 #042B29;
-  }
+    .tile6 .devanagari,
+    .tile6 .roman {
+      font-size: 2rem;
+    }
 
-  .tile5 .devanagari {
-    color: #f16529;
-  }
+    /* Tile-specific colors for Roman text */
+    .tile1 .roman {
+      color: #f16529;
+    }
 
-  .tile6 .devanagari {
-    color: #ffffff;
-    text-shadow:
-      -1px -1px 0 #042B29,
-      1px -1px 0 #042B29,
-      -1px 1px 0 #042B29,
-      1px 1px 0 #042B29;
-  }
+    .tile2 .roman {
+      color: #042B29;
+    }
 
-  /* Hover logic for the entire tile */
-  .tile-content:hover .devanagari {
-    text-shadow: none; /* Remove stroke */
-  }
+    .tile3 .roman {
+      color: #042B29;
+    }
 
-  .tile1 .tile-content:hover .devanagari {
-    color: #EDF7D2; /* Fill with Roman text color */
-  }
+    .tile4 .roman {
+      color: #c94422;
+    }
 
-  .tile2 .tile-content:hover .devanagari {
-    color: #EDF7D2; /* Fill with Roman text color */
-  }
+    .tile5 .roman {
+      color: #ffffff;
+    }
 
-  .tile3 .tile-content:hover .devanagari {
-    color: #EDF7D2; /* Fill with Roman text color */
-  }
+    .tile6 .roman {
+      color: #c94422;
+    }
 
-  .tile4 .tile-content:hover .devanagari {
-    color: #042B29; /* Fill with Roman text color */
-  }
+    /* Base Devanagari text stroked with matching tile background */
+    .tile1 .devanagari {
+      color: #072d2b;
+      text-shadow:
+        -1px -1px 0 #EDF7D2,
+        1px -1px 0 #EDF7D2,
+        -1px 1px 0 #EDF7D2,
+        1px 1px 0 #EDF7D2;
+    }
 
-  .tile5 .tile-content:hover .devanagari {
-    color: #edf6d9; /* Fill with a light color */
-  }
+    .tile2 .devanagari {
+      color: #f16529;
+      text-shadow:
+        -1px -1px 0 #EDF7D2,
+        1px -1px 0 #EDF7D2,
+        -1px 1px 0 #EDF7D2,
+        1px 1px 0 #EDF7D2;
+    }
 
-  .tile6 .tile-content:hover .devanagari {
-    color: #042B29; /* Fill with Roman text color */
-  }
+    .tile3 .devanagari {
+      color: #c94422;
+      text-shadow:
+        -1px -1px 0 #EDF7D2,
+        1px -1px 0 #EDF7D2,
+        -1px 1px 0 #EDF7D2,
+        1px 1px 0 #EDF7D2;
+    }
 
-  /* Fibonacci tile sizes and positions */
-  .tile1 {
-    width: 704px;
-    height: 704px;
-    top: 0;
-    left: 0;
-    background: #072d2b;
-  }
+    .tile4 .devanagari {
+      color: #edf6d9;
+      text-shadow:
+        -1px -1px 0 #042B29,
+        1px -1px 0 #042B29,
+        -1px 1px 0 #042B29,
+        1px 1px 0 #042B29;
+    }
 
-  .tile2 {
-    width: 440px;
-    height: 440px;
-    top: 0;
-    left: 704px;
-    background: #f16529;
-  }
+    .tile5 .devanagari {
+      color: #f16529;
+    }
 
-  .tile3 {
-    width: 264px;
-    height: 264px;
-    top: 440px;
-    left: 880px;
-    background: #c94422;
-  }
+    .tile6 .devanagari {
+      color: #ffffff;
+      text-shadow:
+        -1px -1px 0 #042B29,
+        1px -1px 0 #042B29,
+        -1px 1px 0 #042B29,
+        1px 1px 0 #042B29;
+    }
 
-  .tile4 {
-    width: 176px;
-    height: 176px;
-    top: 528px;
-    left: 704px;
-    background: #edf6d9;
-    color: #222;
-  }
+    /* Hover logic for the entire tile */
+    .tile-content:hover .devanagari {
+      text-shadow: none;
+    }
 
-  .tile5 {
-    width: 88px;
-    height: 88px;
-    top: 440px;
-    left: 704px;
-    background: #072d2b;
-    color: #222;
-  }
+    .tile1 .tile-content:hover .devanagari {
+      color: #EDF7D2;
+    }
 
-  .tile6 {
-    width: 88px;
-    height: 88px;
-    top: 440px;
-    left: 792px;
-    background: #ffffff;
-  }
-</style>
+    .tile2 .tile-content:hover .devanagari {
+      color: #EDF7D2;
+    }
+
+    .tile3 .tile-content:hover .devanagari {
+      color: #EDF7D2;
+    }
+
+    .tile4 .tile-content:hover .devanagari {
+      color: #042B29;
+    }
+
+    .tile5 .tile-content:hover .devanagari {
+      color: #edf6d9;
+    }
+
+    .tile6 .tile-content:hover .devanagari {
+      color: #042B29;
+    }
+
+    /* Fibonacci tile sizes and positions - applied to both layers */
+    .tile1,
+    .grid-tile1 {
+      width: 704px;
+      height: 704px;
+      top: 0;
+      left: 0;
+      background: #072d2b;
+    }
+
+    .tile2,
+    .grid-tile2 {
+      width: 440px;
+      height: 440px;
+      top: 0;
+      left: 704px;
+      background: #f16529;
+    }
+
+    .tile3,
+    .grid-tile3 {
+      width: 264px;
+      height: 264px;
+      top: 440px;
+      left: 880px;
+      background: #c94422;
+    }
+
+    .tile4,
+    .grid-tile4 {
+      width: 176px;
+      height: 176px;
+      top: 528px;
+      left: 704px;
+      background: #edf6d9;
+      color: #222;
+    }
+
+    .tile5,
+    .grid-tile5 {
+      width: 88px;
+      height: 88px;
+      top: 440px;
+      left: 704px;
+      background: #072d2b;
+      color: #222;
+    }
+
+    .tile6,
+    .grid-tile6 {
+      width: 88px;
+      height: 88px;
+      top: 440px;
+      left: 792px;
+      background: #ffffff;
+    }
+  </style>
 </head>
 
 <body>
+  <!-- BOTTOM LAYER - Grid lines only -->
+  <div class="fibonacci-grid" id="fibonacci-grid">
+    <div class="grid-tile grid-tile1" data-pair="1">
+      <div class="tile-lines"></div>
+    </div>
+    <div class="grid-tile grid-tile2" data-pair="2">
+      <div class="tile-lines"></div>
+    </div>
+    <div class="grid-tile grid-tile3" data-pair="3">
+      <div class="tile-lines"></div>
+    </div>
+    <div class="grid-tile grid-tile4" data-pair="4">
+      <div class="tile-lines"></div>
+    </div>
+    <div class="grid-tile grid-tile5" data-pair="5">
+      <div class="tile-lines"></div>
+    </div>
+    <div class="grid-tile grid-tile6" data-pair="6">
+      <div class="tile-lines"></div>
+    </div>
+  </div>
 
-  <div class="fibonacci" id="fibonacci">
-    <div class="tile-container tile1">
+  <!-- TOP LAYER - Text content only -->
+  <div class="fibonacci-content" id="fibonacci-content">
+    <div class="tile-container tile1" data-pair="1">
       <div class="tile-content">
         <div class="tile-text roman" data-text="SERVICES">SERVICES</div>
         <div class="tile-text devanagari" data-text="सर्विसेस">सर्विसेस</div>
       </div>
     </div>
-    <div class="tile-container tile2">
+    <div class="tile-container tile2" data-pair="2">
       <div class="tile-content">
         <div class="tile-text roman" data-text="WORK">WORK</div>
         <div class="tile-text devanagari" data-text="कामकाज">काम काज</div>
       </div>
     </div>
-    <div class="tile-container tile3">
+    <div class="tile-container tile3" data-pair="3">
       <div class="tile-content">
         <div class="tile-text devanagari" data-text="संपर्क">संपर्क</div>
         <div class="tile-text roman" data-text="CONTACT">CONTACT</div>
       </div>
     </div>
-    <div class="tile-container tile4">
+    <div class="tile-container tile4" data-pair="4">
       <div class="tile-content">
         <div class="tile-text devanagari" data-text="जान-पहचान">जान-पहचान</div>
         <div class="tile-text roman" data-text="ABOUT">ABOUT</div>
       </div>
     </div>
-    <div class="tile-container tile5">
+    <div class="tile-container tile5" data-pair="5">
       <div class="tile-content">
         <div class="tile-text roman" data-text="UI">UI</div>
         <div class="tile-text devanagari" data-text="UX">UX</div>
       </div>
     </div>
-    <div class="tile-container tile6">
+    <div class="tile-container tile6" data-pair="6">
       <div class="tile-content">
         <div class="tile-text roman" data-text="BLOGS">BLOGS</div>
         <div class="tile-text devanagari" data-text="लेख">लेख</div>
@@ -363,33 +480,110 @@
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    const fibonacci = document.getElementById('fibonacci');
-    const tiles = fibonacci.querySelectorAll('.tile-container');
-    const whiteTile = fibonacci.querySelector('.tile5');
-    const otherTiles = [...tiles].filter(t => !t.classList.contains('tile5'));
+    // Get both layers
+    const fibonacciGrid = document.getElementById('fibonacci-grid');
+    const fibonacciContent = document.getElementById('fibonacci-content');
 
-    const containerRect = fibonacci.getBoundingClientRect();
+    // Create perfectly matched tile pairs using data attributes
+    const tilePairs = [];
+    for (let i = 1; i <= 6; i++) {
+      const gridTile = fibonacciGrid.querySelector(`[data-pair="${i}"]`);
+      const contentTile = fibonacciContent.querySelector(`[data-pair="${i}"]`);
+      tilePairs.push({ grid: gridTile, content: contentTile, id: i });
+    }
+
+    // Get container dimensions for center calculation
+    const containerRect = { width: 1144, height: 704 };
     const centerX = containerRect.width / 2;
     const centerY = containerRect.height / 2;
 
-    gsap.set(whiteTile, { scale: 10, xPercent: -50, yPercent: -50, top: "50%", left: "50%" });
+    // Special handling for UI/UX tile (tile 5)
+    const uiuxPair = tilePairs.find(pair => pair.id === 5);
+    const otherPairs = tilePairs.filter(pair => pair.id !== 5);
 
-    otherTiles.forEach(tile => {
-      const rect = tile.getBoundingClientRect();
-      const tileCenterX = rect.left + rect.width / 2 - containerRect.left;
-      const tileCenterY = rect.top + rect.height / 2 - containerRect.top;
+    // Set initial state for UI/UX tile (scaled and centered)
+    gsap.set([uiuxPair.grid, uiuxPair.content], {
+      scale: 10,
+      xPercent: -50,
+      yPercent: -50,
+      top: "50%",
+      left: "50%",
+      transformOrigin: "center center"
+    });
+
+    // Set initial positions for other tiles (displaced from center)
+    otherPairs.forEach(pair => {
+      // Calculate tile center based on CSS positioning
+      const tileProps = {
+        1: { width: 704, height: 704, top: 0, left: 0 },
+        2: { width: 440, height: 440, top: 0, left: 704 },
+        3: { width: 264, height: 264, top: 440, left: 880 },
+        4: { width: 176, height: 176, top: 528, left: 704 },
+        6: { width: 88, height: 88, top: 440, left: 792 }
+      }[pair.id];
+
+      const tileCenterX = tileProps.left + tileProps.width / 2;
+      const tileCenterY = tileProps.top + tileProps.height / 2;
       const dx = tileCenterX - centerX;
       const dy = tileCenterY - centerY;
-      gsap.set(tile, { x: dx * 4, y: dy * 4 });
+
+      // Apply synchronized displacement to both tiles in the pair
+      gsap.set([pair.grid, pair.content], {
+        x: dx * 4,
+        y: dy * 4,
+        transformOrigin: "center center"
+      });
     });
 
+    // Add grid animation state tracking
+    fibonacciGrid.setAttribute('data-animating', 'false');
+
+    // Create main timeline with longer duration for staggered animations
     const tl = gsap.timeline({
-      scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: 1 }
+      scrollTrigger: {
+        trigger: document.body,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        onUpdate: (self) => {
+          // Add subtle grid line enhancement during animation
+          const progress = self.progress;
+          if (progress > 0.1 && progress < 0.9) {
+            fibonacciGrid.setAttribute('data-animating', 'true');
+          } else {
+            fibonacciGrid.setAttribute('data-animating', 'false');
+          }
+        }
+      }
     });
 
-    tl.to(whiteTile, { scale: 1, top: "440px", left: "704px", xPercent: 0, yPercent: 0, ease: "power2.inOut" }, 0);
-    tl.to(otherTiles, { x: 0, y: 0, ease: "power3.out", stagger: 0.05 }, 0.2);
-    tl.to([".fibonacci", "body"], { "--gap": "0px", ease: "power2.inOut" }, 0);
+    // Animate UI/UX tile back to normal size and position (perfectly synchronized)
+    tl.to([uiuxPair.grid, uiuxPair.content], {
+      scale: 1,
+      top: "440px",
+      left: "704px",
+      xPercent: 0,
+      yPercent: 0,
+      ease: "power2.inOut",
+      duration: 0.6
+    }, 0);
+
+    // Animate all other tiles together at the same time
+    tl.to(otherPairs.map(pair => [pair.grid, pair.content]).flat(), {
+      x: 0,
+      y: 0,
+      ease: "power3.out",
+      duration: 0.8
+    }, 0.2);
+
+    // Animate gap reduction for both layers simultaneously - start earlier
+    tl.to([fibonacciGrid, fibonacciContent, document.body], {
+      "--gap": "0px",
+      ease: "power2.inOut",
+      duration: 2
+    }, 0);
+
+    console.log("Fibonacci grid animation with synchronized layers initialized");
   </script>
 
 </body>
