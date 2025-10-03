@@ -32,7 +32,7 @@
       justify-content: center;
       align-items: center;
       --gap: 40px;
-      background: none; /* Background removed */
+      background: none;
       overflow: hidden;
       position: relative;
     }
@@ -42,8 +42,6 @@
       position: fixed;
       top: 50%;
       left: 50%;
-      width: 1144px;
-      height: 704px;
       transform: translate(-50%, -50%);
       transform-origin: center center;
       user-select: none;
@@ -56,14 +54,28 @@
       position: fixed;
       top: 50%;
       left: 50%;
-      width: 1144px;
-      height: 704px;
       transform: translate(-50%, -50%);
       transform-origin: center center;
       user-select: none;
       --gap: 40px;
       z-index: 2;
       color: white;
+    }
+
+    /* Default: Vertical layout for mobile/tablet */
+    .fibonacci-grid,
+    .fibonacci-content {
+      width: 704px;
+      height: 1144px;
+    }
+
+    /* Desktop/laptop: Horizontal layout */
+    @media screen and (min-width: 1200px) {
+      .fibonacci-grid,
+      .fibonacci-content {
+        width: 1144px;
+        height: 704px;
+      }
     }
 
     .tile-container,
@@ -130,7 +142,7 @@
       bottom: 0;
     }
 
-    /* Enhanced styling for UI/UX tile borders - more prominent but still subtle orange */
+    /* Enhanced styling for UI/UX tile borders */
     .grid-tile5 .tile-lines::before,
     .grid-tile5 .tile-lines::after,
     .grid-tile5::before,
@@ -223,30 +235,58 @@
       order: 1;
     }
 
-    /* Matched Font Sizes */
+    /* Font sizes - responsive */
     .tile1 .devanagari,
     .tile1 .roman {
-      font-size: 7rem;
+      font-size: 5rem;
     }
 
     .tile2 .devanagari,
     .tile2 .roman {
-      font-size: 5.5rem;
+      font-size: 4rem;
     }
 
     .tile3 .devanagari,
     .tile3 .roman {
-      font-size: 4.5rem;
+      font-size: 3rem;
     }
 
     .tile4 .devanagari,
     .tile4 .roman {
-      font-size: 3rem;
+      font-size: 2rem;
     }
 
     .tile6 .devanagari,
     .tile6 .roman {
-      font-size: 2rem;
+      font-size: 1.5rem;
+    }
+
+    /* Larger font sizes for desktop */
+    @media screen and (min-width: 1200px) {
+      .tile1 .devanagari,
+      .tile1 .roman {
+        font-size: 7rem;
+      }
+
+      .tile2 .devanagari,
+      .tile2 .roman {
+        font-size: 5.5rem;
+      }
+
+      .tile3 .devanagari,
+      .tile3 .roman {
+        font-size: 4.5rem;
+      }
+
+      .tile4 .devanagari,
+      .tile4 .roman {
+        font-size: 3rem;
+      }
+
+      .tile6 .devanagari,
+      .tile6 .roman {
+        font-size: 2rem;
+      }
     }
 
     /* Tile-specific colors for Roman text */
@@ -353,7 +393,7 @@
       color: #042B29;
     }
 
-    /* Fibonacci tile sizes and positions - applied to both layers */
+    /* DEFAULT: Vertical layout (mobile/tablet) tile positions */
     .tile1,
     .grid-tile1 {
       width: 704px;
@@ -367,8 +407,8 @@
     .grid-tile2 {
       width: 440px;
       height: 440px;
-      top: 0;
-      left: 704px;
+      top: 704px;
+      left: 264px;
       background: #f16529;
     }
 
@@ -376,8 +416,8 @@
     .grid-tile3 {
       width: 264px;
       height: 264px;
-      top: 440px;
-      left: 880px;
+      top: 880px;
+      left: 0;
       background: #c94422;
     }
 
@@ -385,8 +425,8 @@
     .grid-tile4 {
       width: 176px;
       height: 176px;
-      top: 528px;
-      left: 704px;
+      top: 704px;
+      left: 0px;
       background: #edf6d9;
       color: #222;
     }
@@ -395,8 +435,8 @@
     .grid-tile5 {
       width: 88px;
       height: 88px;
-      top: 440px;
-      left: 704px;
+      top: 704px;
+      left: 176px;
       background: #072d2b;
       color: #222;
     }
@@ -405,9 +445,92 @@
     .grid-tile6 {
       width: 88px;
       height: 88px;
-      top: 440px;
-      left: 792px;
+      top: 792px;
+      left: 176px;
       background: #ffffff;
+    }
+
+    /* DESKTOP: Horizontal layout */
+    @media screen and (min-width: 1200px) {
+      .tile1,
+      .grid-tile1 {
+        width: 704px;
+        height: 704px;
+        top: 0;
+        left: 0;
+        background: #072d2b;
+      }
+
+      .tile2,
+      .grid-tile2 {
+        width: 440px;
+        height: 440px;
+        top: 0;
+        left: 704px;
+        background: #f16529;
+      }
+
+      .tile3,
+      .grid-tile3 {
+        width: 264px;
+        height: 264px;
+        top: 440px;
+        left: 880px;
+        background: #c94422;
+      }
+
+      .tile4,
+      .grid-tile4 {
+        width: 176px;
+        height: 176px;
+        top: 528px;
+        left: 704px;
+        background: #edf6d9;
+        color: #222;
+      }
+
+      .tile5,
+      .grid-tile5 {
+        width: 88px;
+        height: 88px;
+        top: 440px;
+        left: 704px;
+        background: #072d2b;
+        color: #222;
+      }
+
+      .tile6,
+      .grid-tile6 {
+        width: 88px;
+        height: 88px;
+        top: 440px;
+        left: 792px;
+        background: #ffffff;
+      }
+    }
+
+    /* Mobile optimizations */
+    @media screen and (max-width: 480px) {
+      body {
+        --gap: 20px;
+      }
+      
+      .fibonacci-grid,
+      .fibonacci-content {
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+    }
+
+    /* Tablet optimizations */
+    @media screen and (min-width: 481px) and (max-width: 1199px) {
+      body {
+        --gap: 30px;
+      }
+      
+      .fibonacci-grid,
+      .fibonacci-content {
+        transform: translate(-50%, -50%) scale(0.9);
+      }
     }
   </style>
 </head>
@@ -440,13 +563,13 @@
     <div class="tile-container tile1" data-pair="1">
       <div class="tile-content">
         <div class="tile-text roman" data-text="SERVICES">SERVICES</div>
-        <div class="tile-text devanagari" data-text="सर्विसेस">सर्विसेस</div>
+        <div class="tile-text devanagari" data-text="सेवाएं">सेवाएं</div>
       </div>
     </div>
     <div class="tile-container tile2" data-pair="2">
       <div class="tile-content">
         <div class="tile-text roman" data-text="WORK">WORK</div>
-        <div class="tile-text devanagari" data-text="कामकाज">काम काज</div>
+        <div class="tile-text devanagari" data-text="काम काज">काम काज</div>
       </div>
     </div>
     <div class="tile-container tile3" data-pair="3">
@@ -484,6 +607,9 @@
     const fibonacciGrid = document.getElementById('fibonacci-grid');
     const fibonacciContent = document.getElementById('fibonacci-content');
 
+    // Function to determine if we're on desktop
+    const isDesktop = () => window.innerWidth >= 1200;
+
     // Create perfectly matched tile pairs using data attributes
     const tilePairs = [];
     for (let i = 1; i <= 6; i++) {
@@ -492,98 +618,144 @@
       tilePairs.push({ grid: gridTile, content: contentTile, id: i });
     }
 
-    // Get container dimensions for center calculation
-    const containerRect = { width: 1144, height: 704 };
-    const centerX = containerRect.width / 2;
-    const centerY = containerRect.height / 2;
+    // Function to get container dimensions based on layout
+    const getContainerDimensions = () => {
+      return isDesktop() 
+        ? { width: 1144, height: 704 }
+        : { width: 704, height: 1144 };
+    };
 
-    // Special handling for UI/UX tile (tile 5)
-    const uiuxPair = tilePairs.find(pair => pair.id === 5);
-    const otherPairs = tilePairs.filter(pair => pair.id !== 5);
+    // Function to get tile properties based on layout
+    const getTileProps = (id) => {
+      if (isDesktop()) {
+        // Horizontal layout
+        return {
+          1: { width: 704, height: 704, top: 0, left: 0 },
+          2: { width: 440, height: 440, top: 0, left: 704 },
+          3: { width: 264, height: 264, top: 440, left: 880 },
+          4: { width: 176, height: 176, top: 528, left: 704 },
+          5: { width: 88, height: 88, top: 440, left: 704 },
+          6: { width: 88, height: 88, top: 440, left: 792 }
+        }[id];
+      } else {
+        // Vertical layout
+        return {
+          1: { width: 704, height: 704, top: 0, left: 0 },
+          2: { width: 440, height: 440, top: 704, left: 264 },
+          3: { width: 264, height: 264, top: 880, left: 0 },
+          4: { width: 176, height: 176, top: 704, left: 0 },
+          5: { width: 88, height: 88, top: 704, left: 176 },
+          6: { width: 88, height: 88, top: 792, left: 176 }
+        }[id];
+      }
+    };
 
-    // Set initial state for UI/UX tile (scaled and centered)
-    gsap.set([uiuxPair.grid, uiuxPair.content], {
-      scale: 10,
-      xPercent: -50,
-      yPercent: -50,
-      top: "50%",
-      left: "50%",
-      transformOrigin: "center center"
-    });
+    // Function to get final position for UI/UX tile
+    const getUIUXFinalPosition = () => {
+      return isDesktop() 
+        ? { top: "440px", left: "704px" }
+        : { top: "704px", left: "176px" };
+    };
 
-    // Set initial positions for other tiles (displaced from center)
-    otherPairs.forEach(pair => {
-      // Calculate tile center based on CSS positioning
-      const tileProps = {
-        1: { width: 704, height: 704, top: 0, left: 0 },
-        2: { width: 440, height: 440, top: 0, left: 704 },
-        3: { width: 264, height: 264, top: 440, left: 880 },
-        4: { width: 176, height: 176, top: 528, left: 704 },
-        6: { width: 88, height: 88, top: 440, left: 792 }
-      }[pair.id];
+    // Function to initialize animation
+    const initAnimation = () => {
+      // Clear existing ScrollTriggers
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 
-      const tileCenterX = tileProps.left + tileProps.width / 2;
-      const tileCenterY = tileProps.top + tileProps.height / 2;
-      const dx = tileCenterX - centerX;
-      const dy = tileCenterY - centerY;
+      const containerRect = getContainerDimensions();
+      const centerX = containerRect.width / 2;
+      const centerY = containerRect.height / 2;
 
-      // Apply synchronized displacement to both tiles in the pair
-      gsap.set([pair.grid, pair.content], {
-        x: dx * 4,
-        y: dy * 4,
+      // Special handling for UI/UX tile (tile 5)
+      const uiuxPair = tilePairs.find(pair => pair.id === 5);
+      const otherPairs = tilePairs.filter(pair => pair.id !== 5);
+
+      // Set initial state for UI/UX tile (scaled and centered)
+      gsap.set([uiuxPair.grid, uiuxPair.content], {
+        scale: 10,
+        xPercent: -50,
+        yPercent: -50,
+        top: "50%",
+        left: "50%",
         transformOrigin: "center center"
       });
-    });
 
-    // Add grid animation state tracking
-    fibonacciGrid.setAttribute('data-animating', 'false');
+      // Set initial positions for other tiles (displaced from center)
+      otherPairs.forEach(pair => {
+        const tileProps = getTileProps(pair.id);
+        const tileCenterX = tileProps.left + tileProps.width / 2;
+        const tileCenterY = tileProps.top + tileProps.height / 2;
+        const dx = tileCenterX - centerX;
+        const dy = tileCenterY - centerY;
 
-    // Create main timeline with longer duration for staggered animations
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: document.body,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1,
-        onUpdate: (self) => {
-          // Add subtle grid line enhancement during animation
-          const progress = self.progress;
-          if (progress > 0.1 && progress < 0.9) {
-            fibonacciGrid.setAttribute('data-animating', 'true');
-          } else {
-            fibonacciGrid.setAttribute('data-animating', 'false');
+        // Apply synchronized displacement to both tiles in the pair
+        gsap.set([pair.grid, pair.content], {
+          x: dx * 4,
+          y: dy * 4,
+          transformOrigin: "center center"
+        });
+      });
+
+      // Add grid animation state tracking
+      fibonacciGrid.setAttribute('data-animating', 'false');
+
+      // Create main timeline
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            if (progress > 0.1 && progress < 0.9) {
+              fibonacciGrid.setAttribute('data-animating', 'true');
+            } else {
+              fibonacciGrid.setAttribute('data-animating', 'false');
+            }
           }
         }
-      }
+      });
+
+      // Animate UI/UX tile back to normal size and position
+      const finalPos = getUIUXFinalPosition();
+      tl.to([uiuxPair.grid, uiuxPair.content], {
+        scale: 1,
+        top: finalPos.top,
+        left: finalPos.left,
+        xPercent: 0,
+        yPercent: 0,
+        ease: "power2.inOut",
+        duration: 0.6
+      }, 0);
+
+      // Animate all other tiles together
+      tl.to(otherPairs.map(pair => [pair.grid, pair.content]).flat(), {
+        x: 0,
+        y: 0,
+        ease: "power3.out",
+        duration: 0.8
+      }, 0.2);
+
+      // Animate gap reduction for both layers simultaneously
+      tl.to([fibonacciGrid, fibonacciContent, document.body], {
+        "--gap": "0px",
+        ease: "power2.inOut",
+        duration: 2
+      }, 0);
+    };
+
+    // Initialize on load
+    initAnimation();
+
+    // Reinitialize on window resize with debouncing
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(initAnimation, 250);
     });
 
-    // Animate UI/UX tile back to normal size and position (perfectly synchronized)
-    tl.to([uiuxPair.grid, uiuxPair.content], {
-      scale: 1,
-      top: "440px",
-      left: "704px",
-      xPercent: 0,
-      yPercent: 0,
-      ease: "power2.inOut",
-      duration: 0.6
-    }, 0);
-
-    // Animate all other tiles together at the same time
-    tl.to(otherPairs.map(pair => [pair.grid, pair.content]).flat(), {
-      x: 0,
-      y: 0,
-      ease: "power3.out",
-      duration: 0.8
-    }, 0.2);
-
-    // Animate gap reduction for both layers simultaneously - start earlier
-    tl.to([fibonacciGrid, fibonacciContent, document.body], {
-      "--gap": "0px",
-      ease: "power2.inOut",
-      duration: 2
-    }, 0);
-
-    console.log("Fibonacci grid animation with synchronized layers initialized");
+    console.log("Responsive Fibonacci grid animation initialized");
   </script>
 
 </body>
