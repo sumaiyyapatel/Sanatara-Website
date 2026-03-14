@@ -1,0 +1,58 @@
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+:global(body[data-theme='light']) .header {
+  mix-blend-mode: normal;
+}
+
+.logo {
+  font-family: "Teko", sans-serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream);
+  pointer-events: all;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: all;
+}
+
+.tag {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.themeBtn {
+  border: 1px solid var(--border-soft);
+  background: transparent;
+  color: var(--cream);
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 7px 10px;
+  border-radius: 999px;
+  transition: border-color .25s, color .25s, background .25s;
+}
+
+.themeBtn:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}

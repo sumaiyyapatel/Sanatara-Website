@@ -1,0 +1,181 @@
+.mission {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  padding: 80px 48px;
+  border-bottom: 1px solid rgba(237,246,217,.06);
+}
+.missionLeft {}
+.bigQuote {
+  font-family: "Teko", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 1.05;
+  letter-spacing: -.01em;
+  color: var(--cream);
+}
+.bigQuote em { font-style: italic; color: var(--orange); }
+.missionRight {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 8px;
+}
+.missionRight p {
+  font-family: "DM Sans", sans-serif;
+  font-size: .95rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(237,246,217,.5);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(237,246,217,.04);
+}
+.stat {
+  background: var(--near-black);
+  padding: 48px 40px;
+}
+.statN {
+  font-family: "Teko", sans-serif;
+  font-size: 4rem;
+  font-weight: 300;
+  color: var(--orange);
+  line-height: 1;
+}
+.statL {
+  font-family: "DM Sans", sans-serif;
+  font-size: .6rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(237,246,217,.35);
+  margin-top: 8px;
+}
+
+/* Team */
+.teamSection { padding: 80px 48px; border-bottom: 1px solid rgba(237,246,217,.06); }
+.teamHeader  { margin-bottom: 64px; }
+.teamTitle {
+  font-family: "Teko", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--cream);
+  letter-spacing: -.01em;
+}
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(237,246,217,.04);
+}
+.member {
+  background: var(--near-black);
+  padding: 48px 40px;
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  transition: background .4s;
+}
+.member:hover { background: var(--ink); }
+
+.memberAvatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--rust);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.memberInitial {
+  font-family: "Teko", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--cream);
+  text-transform: uppercase;
+}
+.memberName {
+  font-family: "Teko", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--cream);
+  letter-spacing: .04em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.memberRole {
+  font-family: "DM Sans", sans-serif;
+  font-size: .6rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 16px;
+}
+.memberBio {
+  font-family: "DM Sans", sans-serif;
+  font-size: .85rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(237,246,217,.4);
+}
+
+/* Values */
+.values       { padding: 80px 48px; }
+.valuesHeader { margin-bottom: 64px; }
+.valueGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(237,246,217,.04);
+}
+.value {
+  background: var(--near-black);
+  padding: 48px 40px;
+  transition: background .5s;
+}
+.value:hover { background: var(--ink); }
+.valueNum {
+  font-family: "Teko", sans-serif;
+  font-size: 4rem;
+  font-weight: 300;
+  color: rgba(237,246,217,.06);
+  line-height: 1;
+  display: block;
+  margin-bottom: 20px;
+  transition: color .4s;
+}
+.value:hover .valueNum { color: var(--orange); opacity: .25; }
+.valueTitle {
+  font-family: "Teko", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--cream);
+  letter-spacing: .03em;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.valueDesc {
+  font-family: "DM Sans", sans-serif;
+  font-size: .85rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(237,246,217,.4);
+}
+
+@media (max-width: 900px) {
+  .mission { grid-template-columns: 1fr; gap: 40px; padding: 48px 24px; }
+  .stats   { grid-template-columns: repeat(2,1fr); }
+  .teamGrid, .valueGrid { grid-template-columns: 1fr; }
+  .teamSection, .values { padding: 48px 24px; }
+}
+@media (max-width: 600px) {
+  .stats { grid-template-columns: 1fr 1fr; }
+}
+
+/* Ensure page has bottom padding for inner nav */
+:global(.page) { padding-bottom: 80px; }
