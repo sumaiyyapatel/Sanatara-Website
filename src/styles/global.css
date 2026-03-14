@@ -10,9 +10,14 @@
   --near-black: #0a0a0a;
   --surface: var(--near-black);
   --nav-bg: rgba(7,45,43,.92);
-  --border-soft: rgba(237,246,217,.06);
-  --text-muted: rgba(237,246,217,.5);
-  --text-subtle: rgba(237,246,217,.35);
+  --border-soft:  rgba(237,246,217,.06);
+  --border-mid:    rgba(237,246,217,.12);
+  --text-muted:    rgba(237,246,217,.5);
+  --text-subtle:   rgba(237,246,217,.35);
+  --text-dim:      rgba(237,246,217,.28);
+  --text-faint:    rgba(237,246,217,.2);
+  --surface-card:  rgba(237,246,217,.04);
+  --value-ghost:   rgba(237,246,217,.06);
 }
 
 html {
@@ -35,9 +40,14 @@ body[data-theme='light'] {
   --near-black: #f6f5ef;
   --surface: #f6f5ef;
   --nav-bg: rgba(246,245,239,.94);
-  --border-soft: rgba(7,45,43,.14);
-  --text-muted: rgba(7,45,43,.56);
-  --text-subtle: rgba(7,45,43,.42);
+  --border-soft:  rgba(7,45,43,.18);
+  --border-mid:    rgba(7,45,43,.25);
+  --text-muted:    rgba(7,45,43,.82);
+  --text-subtle:   rgba(7,45,43,.65);
+  --text-dim:      rgba(7,45,43,.52);
+  --text-faint:    rgba(7,45,43,.38);
+  --surface-card:  rgba(7,45,43,.05);
+  --value-ghost:   rgba(7,45,43,.12);
   color-scheme: light;
 }
 

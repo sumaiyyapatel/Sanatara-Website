@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 80px;
   padding: 80px 48px;
-  border-bottom: 1px solid rgba(237,246,217,.06);
+  border-bottom: 1px solid var(--border-soft);
 }
 .missionLeft {}
 .bigQuote {
@@ -27,14 +27,14 @@
   font-size: .95rem;
   font-weight: 300;
   line-height: 1.8;
-  color: rgba(237,246,217,.5);
+  color: var(--text-muted);
 }
 
 .stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1px;
-  background: rgba(237,246,217,.04);
+  background: var(--surface-card);
 }
 .stat {
   background: var(--near-black);
@@ -52,12 +52,12 @@
   font-size: .6rem;
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: rgba(237,246,217,.35);
+  color: var(--text-subtle);
   margin-top: 8px;
 }
 
 /* Team */
-.teamSection { padding: 80px 48px; border-bottom: 1px solid rgba(237,246,217,.06); }
+.teamSection { padding: 80px 48px; border-bottom: 1px solid var(--border-soft); }
 .teamHeader  { margin-bottom: 64px; }
 .teamTitle {
   font-family: "Teko", sans-serif;
@@ -71,7 +71,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1px;
-  background: rgba(237,246,217,.04);
+  background: var(--surface-card);
 }
 .member {
   background: var(--near-black);
@@ -120,7 +120,7 @@
   font-size: .85rem;
   font-weight: 300;
   line-height: 1.7;
-  color: rgba(237,246,217,.4);
+  color: var(--text-subtle);
 }
 
 /* Values */
@@ -130,7 +130,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1px;
-  background: rgba(237,246,217,.04);
+  background: var(--surface-card);
 }
 .value {
   background: var(--near-black);
@@ -142,7 +142,7 @@
   font-family: "Teko", sans-serif;
   font-size: 4rem;
   font-weight: 300;
-  color: rgba(237,246,217,.06);
+  color: var(--value-ghost);
   line-height: 1;
   display: block;
   margin-bottom: 20px;
@@ -164,7 +164,7 @@
   font-size: .85rem;
   font-weight: 300;
   line-height: 1.75;
-  color: rgba(237,246,217,.4);
+  color: var(--text-subtle);
 }
 
 @media (max-width: 900px) {

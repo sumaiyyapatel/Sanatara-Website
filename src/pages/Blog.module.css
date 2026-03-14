@@ -1,6 +1,6 @@
 .featured {
   padding: 80px 48px;
-  border-bottom: 1px solid rgba(237,246,217,.06);
+  border-bottom: 1px solid var(--border-soft);
   max-width: 800px;
 }
 .featuredMeta {
@@ -23,7 +23,7 @@
   font-size: .6rem;
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: rgba(237,246,217,.3);
+  color: var(--text-dim);
 }
 .featTitle {
   font-family: "Teko", sans-serif;
@@ -40,7 +40,7 @@
   font-size: 1rem;
   font-weight: 300;
   line-height: 1.8;
-  color: rgba(237,246,217,.5);
+  color: var(--text-muted);
   margin-bottom: 40px;
   max-width: 600px;
 }
@@ -66,7 +66,7 @@
   justify-content: space-between;
   align-items: flex-start;
   padding: 48px 0;
-  border-bottom: 1px solid rgba(237,246,217,.06);
+  border-bottom: 1px solid var(--border-soft);
   gap: 40px;
   cursor: none;
   transition: background .3s;
@@ -109,14 +109,14 @@
   font-size: .85rem;
   font-weight: 300;
   line-height: 1.75;
-  color: rgba(237,246,217,.4);
+  color: var(--text-subtle);
 }
 .postDate, .postRead {
   font-family: "DM Sans", sans-serif;
   font-size: .6rem;
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: rgba(237,246,217,.25);
+  color: var(--text-dim);
 }
 .postArrow {
   font-family: sans-serif;
